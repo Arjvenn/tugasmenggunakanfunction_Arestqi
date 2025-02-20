@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perhitungan Diskon Produk</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: gray;
+        }
+        h2 {
+            text-align: center;
+        }
+        input[type="number"], input[type="button"] {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: cyan;
+        }
+        #result {
+            margin-top: 20px;
+        }
+        .result-item {
+            font-size: 1.2em;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Perhitungan Diskon Produk</h2>
+        
+        <label for="hargaAsli">Harga Asli Produk (Rp):</label>
+        <input type="number" id="hargaAsli" placeholder="Masukkan harga asli" />
+        
+        <label for="persentaseDiskon">Persentase Diskon (%):</label>
+        <input type="number" id="persentaseDiskon" placeholder="Masukkan persentase diskon" />
+
+        <input type="button" value="Hitung" onclick="hitungDiskon()" />
+
+        <div id="result"></div>
+    </div>
+    
+    <div class="container">
+        <h2>Konversi Suhu</h2>
+        
+        <label for="suhuInput">Masukkan Suhu:</label>
+        <input type="number" id="suhuInput" placeholder="Masukkan suhu" />
+
+        <label for="konversiKe">Pilih Konversi Ke:</label>
+        <select id="konversiKe">
+            <option value="fahrenheit">Fahrenheit</option>
+            <option value="celsius">Celsius</option>
+            <option value="kelvin">Kelvin</option>
+        </select>
+
+        <input type="button" value="Konversi" onclick="konversiSuhu()" />
+
+        <div id="result"></div>
+    </div>
+
+    <div class="container">
+        <h2>Kalkulator</h2>
+        <form id="calculatorForm">
+            <input type="number" id="angka1" placeholder="Angka 1" required><br>
+            <input type="number" id="angka2" placeholder="Angka 2" required><br><br>
+            <select id="operasi">
+                <option value="+">+</option>
+                <option value="-">-</option>
+                <option value="*">*</option>
+                <option value="/">/</option>
+            </select><br><br>
+          <input type="button" value="Hitung" onclick="hitungDiskon()" />
+        </form>
+        <div class="result" id="result"></div>
+    </div>    
+    
+    <div class="container">
+        <h1>Data KTP</h1>
+        
+        <!-- Menampilkan data dalam bentuk card -->
+        <div id="ktp-data" class="card"></div>
+    
+        <div class="footer">
+            <p>&copy; 2025 Data KTP</p>
+        </div>
+    </div>
+
+    <script>
+        function hitungDiskon() {
+            // Mengambil nilai input
+            var hargaAsli = parseFloat(document.getElementById('hargaAsli').value);
+            var persentaseDiskon = parseFloat(document.getElementById('persentaseDiskon').value);
+
+            // Validasi input
+            if (isNaN(hargaAsli) || isNaN(persentaseDiskon)) {
+                alert("Harap masukkan nilai yang valid!");
+                return;
+            }
+
+            // Menghitung diskon
+            var diskon = hargaAsli * (persentaseDiskon / 100);
+            var hargaSetelahDiskon = hargaAsli - diskon;
+
+            // Menampilkan hasil
+            var resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <div class="result-item"><strong>Jumlah Diskon:</strong> Rp ${diskon.toFixed(2)}</div>
+                <div class="result-item"><strong>Harga Setelah Diskon:</strong> Rp ${hargaSetelahDiskon.toFixed(2)}</div>
+            `;
+        }
+
+       // Fungsi untuk konversi suhu
+       function konversiSuhu() {
+            // Mengambil nilai input suhu dan pilihan konversi
+            var suhu = parseFloat(document.getElementById('suhuInput').value);
+            var konversiKe = document.getElementById('konversiKe').value;
+
+            // Validasi input
+            if (isNaN(suhu)) {
+                alert("Harap masukkan suhu yang valid!");
+                return;
+            }
+
+            // Menghitung konversi berdasarkan pilihan
+            var hasilKonversi;
+            var satuanSuhu;
+
+            if (konversiKe === 'fahrenheit') {
+                // Konversi Celsius ke Fahrenheit
+                hasilKonversi = (suhu * 9/5) + 32; 
+                satuanSuhu = "°F";
+            } else if (konversiKe === 'celsius') {
+                // Konversi Fahrenheit ke Celsius
+                hasilKonversi = (suhu - 32) * 5/9;
+                satuanSuhu = "°C";
+            } else if (konversiKe === 'kelvin') {
+                // Konversi Celsius ke Kelvin
+                if (suhu < -273.15) {
+                    alert("Suhu tidak bisa kurang dari -273.15°C!");
+                    return;
+                }
+                hasilKonversi = suhu + 273.15; // Konversi Celsius ke Kelvin
+                satuanSuhu = "K";
+            }
+
+            // Menampilkan hasil konversi ke halaman web
+            document.getElementById('result').innerHTML = `
+                <div class="result-item">Hasil Konversi: ${hasilKonversi.toFixed(2)} ${satuanSuhu}</div>
+            `;
+
+            // Menampilkan hasil konversi di console log
+            console.log(`Suhu yang dimasukkan: ${suhu} °${konversiKe === 'kelvin' ? 'C' : konversiKe === 'fahrenheit' ? 'C' : 'F'}`);
+            console.log(`Hasil konversi: ${hasilKonversi.toFixed(2)} ${satuanSuhu}`);
+        }
+
+        function hitung() {
+        // Mengambil nilai dari input dan operasi
+        const angka1 = parseFloat(document.getElementById('angka1').value);
+        const angka2 = parseFloat(document.getElementById('angka2').value);
+        const operasi = document.getElementById('operasi').value;
+        let hasil;
+
+        // Mengecek operasi yang dipilih
+        if (isNaN(angka1) || isNaN(angka2)) {
+            hasil = "Masukkan kedua angka dengan benar.";
+        } else {
+            switch (operasi) {
+                case "+":
+                    hasil = angka1 + angka2;
+                    break;
+                case "-":
+                    hasil = angka1 - angka2;
+                    break;
+                case "*":
+                    hasil = angka1 * angka2;
+                    break;
+                case "/":
+                    if (angka2 !== 0) {
+                        hasil = angka1 / angka2;
+                    } else {
+                        hasil = "Error: Pembagian dengan nol tidak diperbolehkan.";
+                    }
+                    break;
+                default:
+                    hasil = "Operasi tidak valid.";
+            }
+        }
+
+        // Menampilkan hasil
+        document.getElementById('result').innerText = `Hasil: ${hasil}`;
+    }
+
+     // Data sample untuk KTP
+     const dataKTP = [
+        {nama: "Kevin Santoso", nik: "1234567890123456", alamat: "Jl. Merdeka No. 10, Jakarta", tanggalLahir: "2000-02-7", pekerjaan: "Programmer"},
+    ];
+
+    // Fungsi untuk menampilkan data KTP
+    function tampilkanDataKTP() {
+        const container = document.getElementById('ktp-data');
+        container.innerHTML = ""; // Clear previous data
+
+        // Iterasi melalui data KTP dan menampilkannya di card
+        dataKTP.forEach(data => {
+            const cardItem = document.createElement('div');
+            cardItem.classList.add('card-item');
+            
+            // Menambahkan data dalam card
+            cardItem.innerHTML = `
+                <h3>${data.nama}</h3>
+                <p><span class="label">NIK:</span> ${data.nik}</p>
+                <p><span class="label">Alamat:</span> ${data.alamat}</p>
+                <p><span class="label">Tanggal Lahir:</span> ${data.tanggalLahir}</p>
+                <p><span class="label">Pekerjaan:</span> ${data.pekerjaan}</p>
+            `;
+
+            // Menambahkan cardItem ke dalam container
+            container.appendChild(cardItem);
+        });
+    }
+
+    // Panggil fungsi untuk menampilkan data saat halaman dimuat
+    window.onload = tampilkanDataKTP;
+
+    </script>
+
+</body>
+</html>
